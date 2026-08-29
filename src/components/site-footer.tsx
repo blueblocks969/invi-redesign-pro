@@ -42,7 +42,11 @@ export function SiteFooter() {
             </li>
             {categories.map((c) => (
               <li key={c.slug}>
-                <Link to={`/collections/${c.slug}`} className="hover:text-foreground">
+                <Link
+                  to="/collections/$category"
+                  params={{ category: c.slug }}
+                  className="hover:text-foreground"
+                >
                   {c.title}
                 </Link>
               </li>

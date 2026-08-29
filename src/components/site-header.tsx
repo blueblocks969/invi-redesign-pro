@@ -5,9 +5,13 @@ import logo from "@/assets/invi-logo.png";
 import { categories } from "@/data/products";
 import { useCart } from "@/lib/cart";
 
-const links = [
+const links: { to: string; params?: Record<string, string>; label: string }[] = [
   { to: "/shop", label: "Shop All" },
-  ...categories.map((c) => ({ to: `/collections/${c.slug}`, label: c.title })),
+  ...categories.map((c) => ({
+    to: "/collections/$category",
+    params: { category: c.slug },
+    label: c.title,
+  })),
   { to: "/about", label: "About" },
 ];
 
@@ -48,8 +52,9 @@ export function SiteHeader() {
         <nav aria-label="Primary" className="hidden items-center gap-6 lg:flex">
           {links.map((l) => (
             <Link
-              key={l.to}
+              key={l.label}
               to={l.to}
+              params={l.params}
               className="eyebrow text-muted-foreground transition-colors hover:text-foreground"
               activeProps={{ className: "eyebrow text-foreground" }}
             >
@@ -81,9 +86,10 @@ export function SiteHeader() {
           </div>
           <ul className="grid gap-3 pb-2">
             {links.map((l) => (
-              <li key={l.to}>
+              <li key={l.label}>
                 <Link
                   to={l.to}
+                  params={l.params}
                   onClick={() => setMobile(false)}
                   className="eyebrow block text-muted-foreground"
                 >
